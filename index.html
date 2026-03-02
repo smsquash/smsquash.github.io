@@ -52,7 +52,6 @@
 <table id="leaderboard"></table>
 
 <div class="footer">Auto updated from Google Sheet</div>
-
 <script>
 const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfrLqNVMK4mC4Suu99ZHbrP0qFNwUDeg0KhQg3nvIIy61Ujn3pF2DSuir_t9E-dFYR_CcmkmBgezhy/pub?gid=2108913512&single=true&output=csv";
 
@@ -60,23 +59,49 @@ fetch(url)
   .then(response => response.text())
   .then(data => {
     const rows = data.trim().split("\n").map(r => r.split(","));
-    let table = document.getElementById("leaderboard");
+    const table = document.getElementById("leaderboard");
 
-    rows.forEach((row, index) => {
-      let tr = document.createElement("tr");
-      row.forEach(cell => {
-        let element = document.createElement(index === 0 ? "th" : "td");
+    rows.forEach((row, rowIndex) => {
+      const tr = document.createElement("tr");
+
+      row.forEach((cell, colIndex) => {
+        const element = document.createElement(rowIndex === 0 ? "th" : "td");
         element.innerText = cell;
+
+        // Add sorting on header click
+        if (rowIndex === 0) {
+          element.style.cursor = "pointer";
+          element.addEventListener("click", () => sortTable(colIndex));
+        }
+
         tr.appendChild(element);
       });
+
       table.appendChild(tr);
     });
-  })
-  .catch(error => {
-    document.body.innerHTML += "<p>Error loading leaderboard.</p>";
-    console.error(error);
   });
-</script>
 
+function sortTable(colIndex) {
+  const table = document.getElementById("leaderboard");
+  const rows = Array.from(table.rows).slice(1);
+  const isNumeric = !isNaN(rows[0].cells[colIndex].innerText);
+
+  const asc = table.getAttribute("data-sort") !== "asc";
+  table.setAttribute("data-sort", asc ? "asc" : "desc");
+
+  rows.sort((a, b) => {
+    let A = a.cells[colIndex].innerText;
+    let B = b.cells[colIndex].innerText;
+
+    if (isNumeric) {
+      return asc ? A - B : B - A;
+    } else {
+      return asc ? A.localeCompare(B) : B.localeCompare(A);
+    }
+  });
+
+  rows.forEach(row => table.appendChild(row));
+}
+</script>
 </body>
 </html>
