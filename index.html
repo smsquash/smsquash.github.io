@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SM Squash Leaderboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    table {
+      margin: 30px auto;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 700px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #111;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    tr:hover {
+      background: #f1f1f1;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🏆 SM Squash Leaderboard</h1>
+
+<table id="leaderboard"></table>
+
+<div class="footer">Auto updated from Google Sheet</div>
+
+<script>
+const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfrLqNVMK4mC4Suu99ZHbrP0qFNwUDeg0KhQg3nvIIy61Ujn3pF2DSuir_t9E-dFYR_CcmkmBgezhy/pub?gid=2108913512&single=true&output=csv";
+
+fetch(url)
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.trim().split("\n").map(r => r.split(","));
+    let table = document.getElementById("leaderboard");
+
+    rows.forEach((row, index) => {
+      let tr = document.createElement("tr");
+      row.forEach(cell => {
+        let element = document.createElement(index === 0 ? "th" : "td");
+        element.innerText = cell;
+        tr.appendChild(element);
+      });
+      table.appendChild(tr);
+    });
+  })
+  .catch(error => {
+    document.body.innerHTML += "<p>Error loading leaderboard.</p>";
+    console.error(error);
+  });
+</script>
+
+</body>
+</html>
