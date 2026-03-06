@@ -43,6 +43,7 @@
       transition: color 0.2s;
     }
     nav a.back:hover { color: var(--red); }
+
     .hero {
       position: relative;
       background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
@@ -83,6 +84,7 @@
       margin-top: 8px;
       animation: fadeDown 0.6s 0.25s ease both;
     }
+
     .info-strip {
       display: flex;
       flex-wrap: wrap;
@@ -90,8 +92,8 @@
       background: var(--red);
     }
     .info-item {
-      flex: 1 1 200px;
-      padding: 24px 30px;
+      flex: 1 1 160px;
+      padding: 20px 24px;
       text-align: center;
       border-right: 1px solid rgba(255,255,255,0.2);
     }
@@ -105,10 +107,11 @@
     }
     .info-item .value {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: 1px;
     }
+
     .poster-section {
       display: flex;
       justify-content: center;
@@ -134,6 +137,7 @@
       position: relative;
       z-index: 1;
     }
+
     .categories-section {
       background: #0f0f0f;
       padding: 60px 20px;
@@ -176,103 +180,51 @@
       border-color: var(--red);
       transform: translateY(-2px);
     }
-    .form-section {
+
+    /* CTA SECTION */
+    .cta-section {
       background: var(--black);
       padding: 70px 20px;
-    }
-    .form-container {
-      max-width: 580px;
-      margin: 0 auto;
+      text-align: center;
     }
     .deadline-banner {
+      display: inline-block;
       background: #1a0000;
       border: 1px solid var(--red);
-      padding: 14px 20px;
-      text-align: center;
-      margin-bottom: 40px;
+      padding: 12px 28px;
+      margin-bottom: 36px;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 1rem;
       letter-spacing: 2px;
       color: #ff6666;
     }
     .deadline-banner strong { color: var(--white); }
-    .form-group { margin-bottom: 22px; }
-    label {
-      display: block;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 8px;
-    }
-    input, select {
-      width: 100%;
-      background: #111;
-      border: 1px solid #333;
-      border-bottom: 2px solid #444;
-      color: var(--white);
-      padding: 14px 16px;
-      font-family: 'Barlow', sans-serif;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    input:focus, select:focus {
-      border-color: var(--red);
-      border-bottom-color: var(--red);
-      background: #160000;
-    }
-    select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23cc0000' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 40px;
-    }
-    select option { background: #111; }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .fee-note {
-      background: #0f0f0f;
-      border-left: 3px solid var(--red);
-      padding: 14px 18px;
-      font-size: 0.9rem;
-      color: #bbb;
-      margin-bottom: 28px;
-    }
-    .fee-note strong { color: var(--white); font-size: 1.1rem; }
-    .submit-btn {
-      width: 100%;
+    .register-btn {
+      display: inline-block;
       background: var(--red);
       color: var(--white);
-      border: none;
-      padding: 18px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .submit-btn:hover { background: var(--dark-red); transform: translateY(-1px); }
-    .success-msg {
-      display: none;
-      text-align: center;
-      padding: 40px 20px;
-      animation: fadeDown 0.4s ease;
-    }
-    .success-msg .checkmark { font-size: 3rem; margin-bottom: 16px; }
-    .success-msg h3 {
+      text-decoration: none;
+      padding: 22px 60px;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
-      letter-spacing: 3px;
-      margin-bottom: 10px;
+      letter-spacing: 5px;
+      transition: all 0.2s;
+      position: relative;
     }
-    .success-msg p { color: #aaa; font-size: 0.95rem; }
+    .register-btn:hover {
+      background: var(--dark-red);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(204,0,0,0.4);
+    }
+    .register-btn:active { transform: translateY(0); }
+    .cta-note {
+      margin-top: 24px;
+      color: #555;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+    .cta-note a { color: var(--red); text-decoration: none; }
+
     footer {
       background: #050505;
       border-top: 1px solid #1a1a1a;
@@ -283,13 +235,14 @@
       letter-spacing: 1px;
     }
     footer a { color: var(--red); text-decoration: none; }
+
     @keyframes fadeDown {
       from { opacity: 0; transform: translateY(-16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 500px) {
-      .form-row { grid-template-columns: 1fr; }
       .info-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+      .register-btn { padding: 18px 36px; font-size: 1.5rem; letter-spacing: 3px; }
     }
   </style>
 </head>
@@ -344,88 +297,17 @@
   </div>
 </section>
 
-<section class="form-section">
-  <div class="form-container">
-    <div class="section-title" style="text-align:center">REGISTER <span>NOW</span></div>
-    <div class="section-line"></div>
-    <div class="deadline-banner">
-      ⚠️ Registrations close on <strong>May 5, 2026</strong> — Don't miss out!
-    </div>
-    <div id="regForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label>First Name</label>
-          <input type="text" id="firstName" placeholder="Rahul" required>
-        </div>
-        <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" id="lastName" placeholder="Sharma" required>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" id="email" placeholder="you@example.com" required>
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" id="phone" placeholder="+91 98765 43210" required>
-      </div>
-      <div class="form-group">
-        <label>Age</label>
-        <input type="number" id="age" placeholder="e.g. 24" min="5" max="80" required>
-      </div>
-      <div class="form-group">
-        <label>Category</label>
-        <select id="category" required>
-          <option value="" disabled selected>Select your category</option>
-          <option>Under 9 — Mixed</option>
-          <option>Under 15 — Boys</option>
-          <option>Under 15 — Girls</option>
-          <option>15–29 — Boys</option>
-          <option>Over 30 — Boys</option>
-          <option>Over 30 — Girls</option>
-        </select>
-      </div>
-      <div class="fee-note">
-        Entry Fee: <strong>₹600*</strong> — Payment details will be shared after registration. For queries call <a href="tel:7977648436" style="color:var(--red)">7977648436</a>.
-      </div>
-      <button class="submit-btn" onclick="submitForm()">REGISTER FOR THE TOURNAMENT →</button>
-    </div>
-    <div class="success-msg" id="successMsg">
-      <div class="checkmark">🏆</div>
-      <h3>YOU'RE REGISTERED!</h3>
-      <p>Thanks for signing up. We'll be in touch with payment and match details soon.<br><br>See you on the court on <strong>May 16 & 17</strong>!</p>
-    </div>
-  </div>
+<section class="cta-section">
+  <div class="deadline-banner">⚠️ Registrations close on <strong>May 5, 2026</strong></div>
+  <br>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxEGgoLa7xNXb0shbC0UBk07kus_MrFNEW3AvgVsN-Pl_caw/viewform" target="_blank" class="register-btn">REGISTER NOW →</a>
+  <div class="cta-note">For queries, call <a href="tel:7977648436">7977648436</a></div>
 </section>
 
 <footer>
   &copy; 2026 SM Squash Academy &nbsp;|&nbsp; Andheri Sports Complex, Mumbai &nbsp;|&nbsp;
   <a href="tel:7977648436">7977648436</a>
 </footer>
-
-<script>
-function submitForm() {
-  const fields = ['firstName','lastName','email','phone','age','category'];
-  let valid = true;
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) {
-      el.style.borderColor = '#ff4444';
-      valid = false;
-    } else {
-      el.style.borderColor = '#444';
-    }
-  });
-  if (!valid) {
-    alert('Please fill in all fields before submitting.');
-    return;
-  }
-  window.open("https://docs.google.com/forms/d/e/1FAIpQLSdxEGgoLa7xNXb0shbC0UBk07kus_MrFNEW3AvgVsN-Pl_caw/viewform", '_blank');
-  document.getElementById('regForm').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
-}
-</script>
 
 </body>
 </html>
