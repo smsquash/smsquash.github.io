@@ -13,20 +13,31 @@
     }
     h1 {
       margin-top: 20px;
+      font-size: clamp(1.2rem, 5vw, 2rem);
     }
-    table {
+
+    /* Wrap table in a scrollable container for mobile */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       margin: 30px auto;
-      border-collapse: collapse;
       width: 95%;
       max-width: 700px;
-      background: white;
       border-radius: 10px;
-      overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 320px;
+      background: white;
+    }
+
     th, td {
-      padding: 12px;
+      padding: 12px 10px;
       border-bottom: 1px solid #eee;
+      white-space: nowrap;
     }
     th {
       background: #111;
@@ -38,6 +49,33 @@
     tr:hover {
       background: #f1f1f1;
     }
+
+    /* Scroll hint on small screens */
+    .scroll-hint {
+      display: none;
+      font-size: 11px;
+      color: #999;
+      margin-top: 8px;
+    }
+    @media (max-width: 500px) {
+      .scroll-hint { display: block; }
+      th, td { padding: 10px 8px; font-size: 0.9rem; }
+    }
+
+    .tournament-banner {
+      display: inline-block;
+      margin: 16px auto 4px;
+      background: #cc0000;
+      color: white;
+      padding: 10px 24px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .tournament-banner:hover { background: #990000; }
+
     .footer {
       margin-top: 20px;
       font-size: 12px;
@@ -46,37 +84,34 @@
   </style>
 </head>
 <body>
-
 <h1>🏆 SM Squash Leaderboard</h1>
-<a href="tournament.html" style="display:inline-block; margin: 20px auto; background:#cc0000; color:white; padding:12px 28px; font-weight:bold; text-decoration:none; border-radius:4px;">🎾 May Tournament — Register Now</a>
-<table id="leaderboard"></table>
 
+<a href="tournament.html" class="tournament-banner">🎾 May Tournament — Register Now</a>
+
+<div class="table-wrapper">
+  <table id="leaderboard"></table>
+</div>
+<div class="scroll-hint">← Swipe to scroll →</div>
 <div class="footer">Auto updated from Google Sheet</div>
+
 <script>
 const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfrLqNVMK4mC4Suu99ZHbrP0qFNwUDeg0KhQg3nvIIy61Ujn3pF2DSuir_t9E-dFYR_CcmkmBgezhy/pub?gid=2108913512&single=true&output=csv";
-
 fetch(url)
   .then(response => response.text())
   .then(data => {
     const rows = data.trim().split("\n").map(r => r.split(","));
     const table = document.getElementById("leaderboard");
-
     rows.forEach((row, rowIndex) => {
       const tr = document.createElement("tr");
-
       row.forEach((cell, colIndex) => {
         const element = document.createElement(rowIndex === 0 ? "th" : "td");
         element.innerText = cell;
-
-        // Add sorting on header click
         if (rowIndex === 0) {
           element.style.cursor = "pointer";
           element.addEventListener("click", () => sortTable(colIndex));
         }
-
         tr.appendChild(element);
       });
-
       table.appendChild(tr);
     });
   });
@@ -85,21 +120,17 @@ function sortTable(colIndex) {
   const table = document.getElementById("leaderboard");
   const rows = Array.from(table.rows).slice(1);
   const isNumeric = !isNaN(rows[0].cells[colIndex].innerText);
-
   const asc = table.getAttribute("data-sort") !== "asc";
   table.setAttribute("data-sort", asc ? "asc" : "desc");
-
   rows.sort((a, b) => {
     let A = a.cells[colIndex].innerText;
     let B = b.cells[colIndex].innerText;
-
     if (isNumeric) {
       return asc ? A - B : B - A;
     } else {
       return asc ? A.localeCompare(B) : B.localeCompare(A);
     }
   });
-
   rows.forEach(row => table.appendChild(row));
 }
 </script>
